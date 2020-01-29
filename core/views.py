@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 from .models import Item, Order, OrderItem
 
@@ -8,6 +8,12 @@ from .models import Item, Order, OrderItem
 class HomeView(ListView):
     model = Item
     template_name = 'home.html'
+    paginate_by = 10
+
+
+class OrderSummaryView(View):
+    def get(self, *args, **kwargs):
+        return render(self.request, 'order_summary.html')
 
 
 def checkout(request):
